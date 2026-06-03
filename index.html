@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pokédex – Pokémon Champions</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="pokemon-list.js" defer></script>
+  <script src="index.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <h1>🏆 Pokémon Champions - (By Nezzz)</h1>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html" class="active">📋 Pokédex</a>
+    <a href="team.html">⚔️ Mon Équipe</a>
+  </nav>
+
+  <div id="loading">
+    &#9203; Chargement des Pokémon en cours...
+    <div id="progress-bar-container">
+      <div id="progress-bar"></div>
+    </div>
+    <div id="progress-text" style="font-size:13px; color:#aaa; margin-top:6px;"></div>
+  </div>
+
+  <div id="main-content" style="display:none;">
+
+    <div class="filters">
+      <input type="text" id="search" placeholder="&#128269; Rechercher un Pokémon..." oninput="filterTable()" />
+      <select id="filter-type" onchange="filterTable()">
+        <option value="">Tous les types</option>
+      </select>
+      <select id="filter-forme" onchange="filterTable()">
+        <option value="">Toutes les formes</option>
+        <option value="base">Formes de base uniquement</option>
+        <option value="mega">Méga-évolutions</option>
+        <option value="regional">Formes régionales</option>
+        <option value="special">Formes spéciales</option>
+      </select>
+    </div>
+
+    <div id="counter"></div>
+
+    <div class="table-container">
+      <table id="pokemon-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Sprite</th>
+            <th>Nom</th>
+            <th>Types</th>
+            <th class="sortable" onclick="sortTable(4)"  data-col="4">PV &#8597;</th>
+            <th class="sortable" onclick="sortTable(5)"  data-col="5">Att &#8597;</th>
+            <th class="sortable" onclick="sortTable(6)"  data-col="6">Déf &#8597;</th>
+            <th class="sortable" onclick="sortTable(7)"  data-col="7">Att Spé &#8597;</th>
+            <th class="sortable" onclick="sortTable(8)"  data-col="8">Déf Spé &#8597;</th>
+            <th class="sortable" onclick="sortTable(9)"  data-col="9">Vit &#8597;</th>
+            <th class="sortable" onclick="sortTable(10)" data-col="10">Total &#8597;</th>
+          </tr>
+        </thead>
+        <tbody id="pokemon-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>

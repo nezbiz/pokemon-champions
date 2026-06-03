@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mon Équipe – Pokémon Champions</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="pokemon-list.js" defer></script>
+  <script src="ability-translations.js" defer></script>
+  <script src="team.js" defer></script>
+</head>
+
+<body>
+
+  <header>
+    <h1>🏆 Pokémon Champions - (By Nezzz)</h1>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html">📋 Pokédex</a>
+    <a href="team.html" class="active">⚔️ Mon Équipe</a>
+  </nav>
+
+  <div id="team-search-zone">
+    <div class="filters">
+      <input
+        type="text"
+        id="team-search"
+        placeholder="🔍 Rechercher un Pokémon à ajouter..."
+        autocomplete="off"
+      />
+    </div>
+    <div id="team-suggestions"></div>
+  </div>
+
+  <div id="team-counter">0 / 6 Pokémon dans l'équipe</div>
+  <div id="team-message" class="team-message"></div>
+
+  <div id="team-slots">
+    <div class="team-slot empty" id="slot-0"><span class="slot-placeholder">Ajouter<br>un Pokémon</span></div>
+    <div class="team-slot empty" id="slot-1"><span class="slot-placeholder">Ajouter<br>un Pokémon</span></div>
+    <div class="team-slot empty" id="slot-2"><span class="slot-placeholder">Ajouter<br>un Pokémon</span></div>
+    <div class="team-slot empty" id="slot-3"><span class="slot-placeholder">Ajouter<br>un Pokémon</span></div>
+    <div class="team-slot empty" id="slot-4"><span class="slot-placeholder">Ajouter<br>un Pokémon</span></div>
+    <div class="team-slot empty" id="slot-5"><span class="slot-placeholder">Ajouter<br>un Pokémon</span></div>
+  </div>
+
+  <section id="advanced-search-zone" class="hidden">
+    <div class="advanced-search-container">
+      <h2>Recherche avancée d'un Pokémon</h2>
+      
+      <div class="filter-top-row">
+        <div class="filter-group stats-group">
+          <h3>Bases stats</h3>
+          <div class="stat-filter-row">
+            <label>PV</label>
+            <select id="filter-op-hp"><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option></select>
+            <input type="number" id="filter-val-hp" placeholder="0">
+          </div>
+          <div class="stat-filter-row">
+            <label>Att</label>
+            <select id="filter-op-atk"><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option></select>
+            <input type="number" id="filter-val-atk" placeholder="0">
+          </div>
+          <div class="stat-filter-row">
+            <label>Def</label>
+            <select id="filter-op-def"><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option></select>
+            <input type="number" id="filter-val-def" placeholder="0">
+          </div>
+          <div class="stat-filter-row">
+            <label>Att Spé</label>
+            <select id="filter-op-spatk"><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option></select>
+            <input type="number" id="filter-val-spatk" placeholder="0">
+          </div>
+          <div class="stat-filter-row">
+            <label>Def Spé</label>
+            <select id="filter-op-spdef"><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option></select>
+            <input type="number" id="filter-val-spdef" placeholder="0">
+          </div>
+          <div class="stat-filter-row">
+            <label>Vit</label>
+            <select id="filter-op-vit"><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option></select>
+            <input type="number" id="filter-val-vit" placeholder="0">
+          </div>
+        </div>
+
+        <div class="filter-group identity-group">
+          <div class="field-row">
+            <label for="filter-type1">Type 1</label>
+            <select id="filter-type1">
+              <option value="">Tous</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <label for="filter-type2">Type 2</label>
+            <select id="filter-type2">
+              <option value="">Tous</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <label for="filter-talent">Talent</label>
+            <select id="filter-talent" disabled>
+              <option value="">Tous</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-bottom-row">
+        <h3>Filtre de résistances/faiblesses</h3>
+        <div class="type-relations-grid" id="advanced-type-filters"></div>
+      </div>
+
+      <div class="search-actions-container" style="background-color: #222; padding: 15px; text-align: center; display: flex; justify-content: center; gap: 20px; border-radius: 4px; margin-top: 20px;">
+        <button id="btn-search-advanced" type="button" style="background-color: #4CAF50; border: none; color: white; padding: 10px 20px; font-weight: bold; cursor: pointer; font-size: 16px; border-radius: 4px;">
+          Rechercher 🔍
+        </button>
+        
+        <button id="btn-clear-advanced" type="button" style="background-color: #607D8B; border: none; color: white; padding: 10px 20px; font-weight: bold; cursor: pointer; font-size: 16px; border-radius: 4px;">
+          Réinitialiser Filtres 🔄
+        </button>
+
+        <button id="btn-reset-advanced" type="button" style="background-color: #f44336; border: none; color: white; padding: 10px 20px; font-weight: bold; cursor: pointer; font-size: 16px; border-radius: 4px;">
+          Masquer Recherche Avancée ✘
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div id="advanced-results-container" class="hidden" style="margin: 20px auto; max-width: 1200px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+    <h3 style="color: #fff; border-bottom: 2px solid #ff4a4a; padding-bottom: 8px; margin-bottom: 15px;">🔍 Résultats de la recherche</h3>
+    <div id="advanced-results-grid" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;"></div>
+  </div>
+
+  <div id="defense-section">
+    <h2 class="defense-title">🛡️ Couverture défensive de l'équipe</h2>
+    <div id="defense-container">
+      <table id="defense-table">
+        <thead>
+          <tr>
+            <th class="col-type">Type attaquant</th>
+            <th class="col-stat col-immunity">×0<br><span class="col-sub">Immunité</span></th>
+            <th class="col-stat col-good">×0.25<br><span class="col-sub">Résistance</span></th>
+            <th class="col-stat col-good">×0.5<br><span class="col-sub">Résistance</span></th>
+            <th class="col-stat col-neutral">×1<br><span class="col-sub">Normal</span></th>
+            <th class="col-stat col-bad">×2<br><span class="col-sub">Faiblesse</span></th>
+            <th class="col-stat col-bad">×4<br><span class="col-sub">Faiblesse</span></th>
+          </tr>
+        </thead>
+        <tbody id="defense-tbody"></tbody>
+      </table>
+      <div id="defense-legend">
+        <span class="legend-item danger">■ Danger : toute l'équipe est faible</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

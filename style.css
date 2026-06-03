@@ -1,0 +1,869 @@
+/* ============================================================
+   STYLES GÉNÉRAUX
+   ============================================================ */
+
+body {
+  font-family: Arial, sans-serif;
+  background: #1a1a2e;
+  color: #eee;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================================
+   HEADER & TITRE
+   ============================================================ */
+
+header {
+  background: linear-gradient(135deg, #e63946, #457b9d);
+  padding: 20px 30px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #fff;
+  margin: 0;
+}
+
+/* ============================================================
+   NAVIGATION ENTRE PAGES
+   ============================================================ */
+
+.site-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: #0f3460;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.site-nav a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 6px 18px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.site-nav a:hover {
+  background: #e94560;
+  color: #fff;
+}
+
+.site-nav a.active {
+  background: #e63946;
+  color: #fff;
+}
+
+/* ============================================================
+   CONTENU PRINCIPAL
+   ============================================================ */
+
+#main-content {
+  padding: 0 20px 20px 20px;
+}
+
+/* ============================================================
+   UTILITAIRES
+   ============================================================ */
+
+.hidden {
+  display: none !important;
+}
+
+/* ============================================================
+   FILTRES (index.html)
+   ============================================================ */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filters input,
+.filters select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #0f3460;
+  color: #eee;
+  font-size: 14px;
+}
+
+.filters input::placeholder {
+  color: #aaa;
+}
+
+/* ============================================================
+   COMPTEUR (index.html)
+   ============================================================ */
+
+#counter {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* ============================================================
+   TABLEAU POKÉDEX
+   ============================================================ */
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #16213e;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th {
+  background: #0f3460;
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 13px;
+  border-bottom: 2px solid #e63946;
+  white-space: nowrap;
+}
+
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+th.sortable:hover {
+  background: #e94560;
+}
+
+th.sort-active {
+  background: #e94560;
+  color: #fff;
+}
+
+td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #0f3460;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+tr:nth-child(even) {
+  background: #1a1a2e;
+}
+
+tr:hover {
+  background: #0f3460;
+}
+
+/* ============================================================
+   SPRITE POKÉMON
+   ============================================================ */
+
+.sprite {
+  width: 56px;
+  height: 56px;
+}
+
+/* ============================================================
+   COLONNE NOM
+   ============================================================ */
+
+td.col-nom {
+  text-align: left;
+  padding-left: 12px;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+   BADGES DE TYPE
+   ============================================================ */
+
+.type-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  margin: 2px;
+  color: #fff;
+}
+
+.type-Feu      { background: #F08030; }
+.type-Eau      { background: #6890F0; }
+.type-Plante   { background: #78C850; }
+.type-Electrik { background: #F8D030; color: #333; }
+.type-Psy      { background: #F85888; }
+.type-Glace    { background: #98D8D8; color: #333; }
+.type-Dragon   { background: #7038F8; }
+.type-Tenebres { background: #705848; }
+.type-Combat   { background: #C03028; }
+.type-Poison   { background: #A040A0; }
+.type-Sol      { background: #E0C068; color: #333; }
+.type-Vol      { background: #A890F0; }
+.type-Insecte  { background: #A8B820; }
+.type-Roche    { background: #B8A038; }
+.type-Spectre  { background: #705898; }
+.type-Acier    { background: #B8B8D0; color: #333; }
+.type-Normal   { background: #A8A878; color: #333; }
+.type-Fee      { background: #EE99AC; color: #333; }
+
+/* ============================================================
+   BADGES DE FORME
+   ============================================================ */
+
+.badge-mega,
+.badge-regional,
+.badge-special {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  margin-left: 4px;
+  vertical-align: middle;
+  color: #1a1a2e;
+}
+
+.badge-mega     { background: #f5c518; }
+.badge-regional { background: #4fc3f7; }
+.badge-special  { background: #ce93d8; }
+
+/* ============================================================
+   BARRES DE STATISTIQUES
+   ============================================================ */
+
+.stat-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-bar-bg {
+  flex: 1;
+  background: #333;
+  border-radius: 4px;
+  height: 8px;
+  min-width: 60px;
+}
+
+.stat-bar-fill {
+  height: 8px;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.stat-value {
+  font-size: 12px;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ============================================================
+   CHARGEMENT & BARRE DE PROGRESSION
+   ============================================================ */
+
+#loading {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 18px;
+  color: #f5c518;
+}
+
+#progress-bar-container {
+  width: 60%;
+  margin: 10px auto;
+  background: #333;
+  border-radius: 10px;
+  height: 12px;
+}
+
+#progress-bar {
+  height: 12px;
+  border-radius: 10px;
+  background: #f5c518;
+  width: 0%;
+  transition: width 0.2s ease;
+}
+
+#progress-text {
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 6px;
+}
+
+/* ============================================================
+   PAGE ÉQUIPE — ZONE DE RECHERCHE
+   ============================================================ */
+
+#team-search-zone {
+  padding: 0 20px;
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto 10px auto;
+}
+
+#team-search {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #0f3460;
+  color: #eee;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+#team-search::placeholder {
+  color: #aaa;
+}
+
+/* ============================================================
+   SUGGESTIONS DE RECHERCHE
+   ============================================================ */
+
+#team-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 20px;
+  right: 20px;
+  background: #16213e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  z-index: 100;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #0f3460;
+  transition: background 0.15s;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background: #0f3460;
+}
+
+.suggestion-item img {
+  width: 36px;
+  height: 36px;
+  image-rendering: pixelated;
+}
+
+.suggestion-name {
+  flex: 1;
+  font-size: 13px;
+  color: #eee;
+}
+
+.suggestion-empty {
+  padding: 10px 12px;
+  color: #aaa;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ============================================================
+   COMPTEUR D'ÉQUIPE
+   ============================================================ */
+
+#team-counter {
+  text-align: center;
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   GRILLE DES 6 SLOTS
+   ============================================================ */
+
+#team-slots {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  padding: 0 20px 20px 20px;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+/* ============================================================
+   SLOT VIDE / REMPLI
+   ============================================================ */
+
+.team-slot {
+  flex: 0 0 calc((100% - 5 * 12px) / 6);
+  min-width: 120px;
+  max-width: 160px;
+  background: #16213e;
+  border: 2px dashed #444;
+  border-radius: 12px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.team-slot.empty:hover {
+  border-color: #e63946;
+  background: #1a1a2e;
+  cursor: pointer;
+}
+
+.slot-placeholder {
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.slot-placeholder::before {
+  content: "+";
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: #e63946;
+  margin-bottom: 4px;
+}
+
+.team-slot.filled {
+  border: 2px solid #0f3460;
+  background: #16213e;
+  padding: 10px 6px 8px 6px;
+}
+
+.slot-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #e63946;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  transition: background 0.2s;
+}
+
+.slot-remove:hover {
+  background: #c0392b;
+}
+
+.slot-sprite {
+  width: 80px;
+  height: 80px;
+  image-rendering: pixelated;
+  margin-bottom: 4px;
+}
+
+.slot-no-sprite {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #555;
+}
+
+.slot-name {
+  font-size: 11px;
+  color: #eee;
+  text-align: center;
+  font-weight: bold;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.slot-badge {
+  margin-bottom: 4px;
+  min-height: 16px;
+}
+
+.slot-types {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+}
+
+/* ============================================================
+   MESSAGE TEMPORAIRE
+   ============================================================ */
+
+.team-message {
+  text-align: center;
+  font-size: 13px;
+  min-height: 20px;
+  margin: 0 20px 10px 20px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: opacity 0.3s;
+}
+
+.team-message.success { background: #1a3a1a; color: #7ddb7d; }
+.team-message.warning { background: #3a2e00; color: #f5c518; }
+.team-message.error   { background: #3a0000; color: #e63946; }
+.team-message.info    { background: #0f2040; color: #4fc3f7; }
+
+/* ============================================================
+   SECTION COUVERTURE DÉFENSIVE — STYLE POKETOOLS
+   ============================================================ */
+
+#defense-section {
+  background: #f0f0f0;
+  padding: 20px 20px 40px 20px;
+  margin-top: 10px;
+}
+
+.defense-title {
+  text-align: center;
+  color: #333;
+  margin: 0 0 14px 0;
+  font-size: 18px;
+}
+
+#defense-container {
+  overflow-x: auto;
+}
+
+/* ============================================================
+   TABLEAU DÉFENSIF
+   ============================================================ */
+
+#defense-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 13px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+}
+
+#defense-table .col-type { width: 130px; }
+#defense-table .col-stat { width: calc((100% - 130px) / 6); }
+
+#defense-table thead th {
+  background: #4db8c8;
+  color: #fff;
+  padding: 10px 6px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+  border-bottom: 2px solid #3aa0b0;
+  border-right: 1px solid #3aa0b0;
+  white-space: nowrap;
+}
+
+#defense-table thead th:last-child {
+  border-right: none;
+}
+
+#defense-table .col-sub {
+  display: block;
+  font-size: 10px;
+  font-weight: normal;
+  color: rgba(255,255,255,0.85);
+  margin-top: 2px;
+}
+
+#defense-table tbody td {
+  padding: 7px 6px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+
+#defense-table tbody td:last-child {
+  border-right: none;
+}
+
+#defense-table tbody tr.def-row-even { background: #ffffff; }
+#defense-table tbody tr.def-row-odd  { background: #f7f7f7; }
+
+#defense-table tbody tr:hover {
+  background: #e8f4f8 !important;
+}
+
+#defense-table tbody td.td-type-full {
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 6px 8px;
+  border-right: 1px solid #ddd !important;
+}
+
+.def-stat-cell {
+  font-size: 14px;
+}
+
+.cell-danger {
+  background: rgba(220, 50, 50, 0.18) !important;
+  outline: 2px solid #e63946;
+  outline-offset: -2px;
+  border-radius: 3px;
+}
+
+/* ============================================================
+   LÉGENDE DU TABLEAU DÉFENSIF
+   ============================================================ */
+
+#defense-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 14px;
+  font-size: 12px;
+  color: #555;
+}
+
+#defense-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#defense-legend .immunity  { color: #7038F8; }
+#defense-legend .good025   { color: #28a050; }
+#defense-legend .good05    { color: #50b478; }
+#defense-legend .neutral   { color: #888;    }
+#defense-legend .bad2      { color: #e07020; }
+#defense-legend .bad4      { color: #e03232; }
+#defense-legend .danger    { color: #e63946; }
+
+
+/* ============================================================
+   ZONE RECHERCHE AVANCÉE
+   ============================================================ */
+
+#advanced-search-zone {
+  background: #e2e8f0;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+  border-radius: 12px;
+  color: #333;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+#advanced-search-zone h2 {
+  text-align: center;
+  color: #0f3460;
+  margin-top: 0;
+  margin-bottom: 0px;
+}
+
+#advanced-search-zone h3 {
+  color: #e63946;
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 4px;
+}
+
+.advanced-search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-top-row {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 280px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.stat-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.stat-filter-row label {
+  width: 60px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+#advanced-search-zone select,
+#advanced-search-zone input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f8fafc;
+  color: #333;
+}
+
+.stat-filter-row select { width: 60px; }
+.stat-filter-row input { width: 80px; }
+
+.identity-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.field-row label {
+  width: 70px;
+  font-weight: bold;
+}
+
+.field-row select {
+  flex: 1;
+}
+
+.filter-bottom-row {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* ────────────────────────────────────────────────────────────
+   GRILLE RECONFIGURÉE — SANS ESPACE BLANC (COLLÉS ENTRE EUX)
+   ──────────────────────────────────────────────────────────── */
+.type-relations-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0; /* Suppression complète de l'espace pour coller les lignes et les colonnes */
+  margin-top: 10px;
+  border: 1px solid #cbd5e1; /* Bordure générale extérieure */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.type-filter-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  background: #f1f5f9;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1; /* Bordures fines communes */
+  margin: -0.5px; /* Évite les doubles bordures */
+}
+
+/* Ajustement spécifique du badge pour s'accorder au collage */
+.type-filter-item .type-badge {
+  margin: 0;
+  width: 85px;
+  text-align: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Ajustement spécifique du select pour s'accorder au collage */
+.type-filter-item select {
+  min-width: 85px;  /* Modifie cette valeur (ex: 100px ou 120px) pour forcer le champ à être plus LARGE */
+  font-size: 12px;  /* Taille du texte à l'intérieur du champ */
+  height: 26px;     /* Modifie cette valeur (ex: 30px ou 34px) pour rendre le champ plus HAUT */
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: none; 
+}
+
+/* Action Button */
+#btn-reset-advanced {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+#btn-reset-advanced:hover {
+  background: #e63946;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .type-relations-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .type-relations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .type-filter-item {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .type-filter-item .type-badge,
+  .type-filter-item select {
+    width: 100%;
+    border-radius: 4px;
+  }
+  .type-filter-item select {
+    border-left: 1px solid #ccc;
+    margin-top: 4px;
+  }
+}
