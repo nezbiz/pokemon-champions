@@ -2,6 +2,7 @@
    STYLES GÉNÉRAUX
    ============================================================ */
 
+/* Configuration de base du document (typographie, arrière-plan et réinitialisation des marges) */
 body {
   font-family: Arial, sans-serif;
   background: #1a1a2e;
@@ -14,6 +15,7 @@ body {
    HEADER & TITRE
    ============================================================ */
 
+/* Bandeau supérieur de l'application avec dégradé de couleur */
 header {
   background: linear-gradient(135deg, #e63946, #457b9d);
   padding: 20px 30px;
@@ -21,6 +23,7 @@ header {
   margin-bottom: 20px;
 }
 
+/* Titre principal dans le bandeau supérieur */
 h1 {
   color: #fff;
   margin: 0;
@@ -30,6 +33,7 @@ h1 {
    NAVIGATION ENTRE PAGES
    ============================================================ */
 
+/* Barre de navigation principale positionnée horizontalement */
 .site-nav {
   display: flex;
   justify-content: center;
@@ -39,6 +43,7 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Liens de navigation par défaut */
 .site-nav a {
   color: #eee;
   text-decoration: none;
@@ -49,11 +54,13 @@ h1 {
   transition: background 0.2s;
 }
 
+/* Effet visuel au survol des liens de navigation */
 .site-nav a:hover {
   background: #e94560;
   color: #fff;
 }
 
+/* Style appliqué au lien de la page actuellement active */
 .site-nav a.active {
   background: #e63946;
   color: #fff;
@@ -63,6 +70,7 @@ h1 {
    CONTENU PRINCIPAL
    ============================================================ */
 
+/* Zone de contenu principale imbriquée sous la navigation */
 #main-content {
   padding: 0 20px 20px 20px;
 }
@@ -71,6 +79,7 @@ h1 {
    UTILITAIRES
    ============================================================ */
 
+/* Classe utilitaire pour masquer un élément du DOM de manière stricte */
 .hidden {
   display: none !important;
 }
@@ -79,6 +88,7 @@ h1 {
    FILTRES (index.html)
    ============================================================ */
 
+/* Alignement horizontal de la barre de recherche et des listes de filtrage du Pokédex */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -87,6 +97,7 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Styles communs pour les champs de saisie et de sélection des filtres */
 .filters input,
 .filters select {
   padding: 8px 12px;
@@ -97,6 +108,7 @@ h1 {
   font-size: 14px;
 }
 
+/* Couleur du texte d'aide (placeholder) dans la recherche */
 .filters input::placeholder {
   color: #aaa;
 }
@@ -105,6 +117,7 @@ h1 {
    COMPTEUR (index.html)
    ============================================================ */
 
+/* Indicateur du nombre de Pokémon actuellement affichés */
 #counter {
   text-align: center;
   margin-bottom: 10px;
@@ -116,10 +129,12 @@ h1 {
    TABLEAU POKÉDEX
    ============================================================ */
 
+/* Conteneur permettant le défilement horizontal du tableau sur petit écran */
 .table-container {
   overflow-x: auto;
 }
 
+/* Structure globale du tableau listant les Pokémon */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -128,6 +143,7 @@ table {
   overflow: hidden;
 }
 
+/* Cellules d'en-tête du tableau */
 th {
   background: #0f3460;
   padding: 12px 8px;
@@ -137,20 +153,24 @@ th {
   white-space: nowrap;
 }
 
+/* En-têtes interactifs supportant le tri des données */
 th.sortable {
   cursor: pointer;
   user-select: none;
 }
 
+/* Effet au survol d'un en-tête triable */
 th.sortable:hover {
   background: #e94560;
 }
 
+/* Style de l'en-tête de colonne sur lequel le tri est actuellement actif */
 th.sort-active {
   background: #e94560;
   color: #fff;
 }
 
+/* Cellules de données standards du tableau */
 td {
   padding: 8px;
   text-align: center;
@@ -159,10 +179,12 @@ td {
   vertical-align: middle;
 }
 
+/* Alternance de couleur de fond pour les lignes paires (effet zébré) */
 tr:nth-child(even) {
   background: #1a1a2e;
 }
 
+/* Surlignage d'une ligne du tableau lors du passage de la souris */
 tr:hover {
   background: #0f3460;
 }
@@ -171,6 +193,7 @@ tr:hover {
    SPRITE POKÉMON
    ============================================================ */
 
+/* Format standard des images d'illustration dans le tableau */
 .sprite {
   width: 56px;
   height: 56px;
@@ -180,6 +203,7 @@ tr:hover {
    COLONNE NOM
    ============================================================ */
 
+/* Alignement et gestion des noms trop longs avec troncature (...) */
 td.col-nom {
   text-align: left;
   padding-left: 12px;
@@ -193,6 +217,7 @@ td.col-nom {
    BADGES DE TYPE
    ============================================================ */
 
+/* Style générique des étiquettes affichant les types élémentaires */
 .type-badge {
   display: inline-block;
   padding: 2px 8px;
@@ -203,6 +228,7 @@ td.col-nom {
   color: #fff;
 }
 
+/* Couleurs spécifiques attribuées individuellement à chaque type de Pokémon */
 .type-Feu      { background: #F08030; }
 .type-Eau      { background: #6890F0; }
 .type-Plante   { background: #78C850; }
@@ -226,6 +252,7 @@ td.col-nom {
    BADGES DE FORME
    ============================================================ */
 
+/* Style de base des étiquettes d'identification des formes (Méga, Régionale, Spéciale) */
 .badge-mega,
 .badge-regional,
 .badge-special {
@@ -239,20 +266,27 @@ td.col-nom {
   color: #1a1a2e;
 }
 
+/* Couleur distinctive du badge Méga-Évolution */
 .badge-mega     { background: #f5c518; }
+
+/* Couleur distinctive du badge Forme Régionale */
 .badge-regional { background: #4fc3f7; }
+
+/* Couleur distinctive du badge Forme Spéciale */
 .badge-special  { background: #ce93d8; }
 
 /* ============================================================
    BARRES DE STATISTIQUES
    ============================================================ */
 
+/* Alignement de la valeur textuelle et de sa jauge de statistique associée */
 .stat-bar-container {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
+/* Conteneur d'arrière-plan (rail gris) d'une jauge de statistique */
 .stat-bar-bg {
   flex: 1;
   background: #333;
@@ -261,12 +295,14 @@ td.col-nom {
   min-width: 60px;
 }
 
+/* Partie colorée dynamique représentant la statistique du Pokémon */
 .stat-bar-fill {
   height: 8px;
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 
+/* Formatage du texte affichant la valeur brute de la statistique */
 .stat-value {
   font-size: 12px;
   min-width: 28px;
@@ -277,6 +313,7 @@ td.col-nom {
    CHARGEMENT & BARRE DE PROGRESSION
    ============================================================ */
 
+/* Message d'attente lors du chargement initial de l'API */
 #loading {
   text-align: center;
   padding: 40px 20px;
@@ -284,6 +321,7 @@ td.col-nom {
   color: #f5c518;
 }
 
+/* Rail d'arrière-plan de la barre de progression globale */
 #progress-bar-container {
   width: 60%;
   margin: 10px auto;
@@ -292,6 +330,7 @@ td.col-nom {
   height: 12px;
 }
 
+/* Remplissage de la barre de progression piloté par le script de chargement */
 #progress-bar {
   height: 12px;
   border-radius: 10px;
@@ -300,6 +339,7 @@ td.col-nom {
   transition: width 0.2s ease;
 }
 
+/* Texte dynamique indiquant l'état numérique du traitement (ex: 10 / 150 loaded) */
 #progress-text {
   font-size: 13px;
   color: #aaa;
@@ -310,6 +350,7 @@ td.col-nom {
    PAGE ÉQUIPE — ZONE DE RECHERCHE
    ============================================================ */
 
+/* Encapsulation de la barre de recherche rapide sur la page Mon Équipe */
 #team-search-zone {
   padding: 0 20px;
   position: relative;
@@ -317,6 +358,7 @@ td.col-nom {
   margin: 0 auto 10px auto;
 }
 
+/* Champ de saisie pour la recherche rapide de Pokémon */
 #team-search {
   width: 100%;
   padding: 8px 12px;
@@ -328,6 +370,7 @@ td.col-nom {
   box-sizing: border-box;
 }
 
+/* Couleur du texte d'aide du champ de recherche d'équipe */
 #team-search::placeholder {
   color: #aaa;
 }
@@ -336,6 +379,7 @@ td.col-nom {
    SUGGESTIONS DE RECHERCHE
    ============================================================ */
 
+/* Menu déroulant absolu affichant les correspondances de la recherche rapide */
 #team-suggestions {
   position: absolute;
   top: 100%;
@@ -349,6 +393,7 @@ td.col-nom {
   overflow-y: auto;
 }
 
+/* Ligne individuelle représentant un Pokémon suggéré */
 .suggestion-item {
   display: flex;
   align-items: center;
@@ -359,26 +404,31 @@ td.col-nom {
   transition: background 0.15s;
 }
 
+/* Suppression de la bordure inférieure sur le dernier élément de liste */
 .suggestion-item:last-child {
   border-bottom: none;
 }
 
+/* Mise en surbrillance d'une suggestion ciblée par la souris */
 .suggestion-item:hover {
   background: #0f3460;
 }
 
+/* Dimensionnement et optimisation du rendu pixel des sprites de suggestion */
 .suggestion-item img {
   width: 36px;
   height: 36px;
   image-rendering: pixelated;
 }
 
+/* Conteneur textuel du nom du Pokémon suggéré */
 .suggestion-name {
   flex: 1;
   font-size: 13px;
   color: #eee;
 }
 
+/* Message affiché lorsqu'aucun Pokémon ne correspond à la recherche */
 .suggestion-empty {
   padding: 10px 12px;
   color: #aaa;
@@ -390,6 +440,7 @@ td.col-nom {
    COMPTEUR D'ÉQUIPE
    ============================================================ */
 
+/* Indicateur textuel global de remplissage de l'équipe (ex: 4 / 6) */
 #team-counter {
   text-align: center;
   color: #aaa;
@@ -401,6 +452,7 @@ td.col-nom {
    GRILLE DES 6 SLOTS
    ============================================================ */
 
+/* Agencement horizontal de la grille d'affichage des 6 membres de l'équipe */
 #team-slots {
   display: flex;
   flex-wrap: nowrap;
@@ -414,6 +466,7 @@ td.col-nom {
    SLOT VIDE / REMPLI
    ============================================================ */
 
+/* Structure de base d'une carte d'emplacement d'équipe (vide ou occupée) */
 .team-slot {
   flex: 0 0 calc((100% - 5 * 12px) / 6);
   min-width: 120px;
@@ -430,12 +483,21 @@ td.col-nom {
   transition: border-color 0.2s, background 0.2s;
 }
 
+/* Effet de survol standard activé uniquement pour les slots modifiables (Page Équipe) */
 .team-slot.empty:hover {
   border-color: #e63946;
   background: #1a1a2e;
   cursor: pointer;
 }
 
+/* Annulation stricte de l'effet de survol sur la page d'accueil (Index) pour figer les slots */
+#main-content #team-slots .team-slot.empty:hover {
+  border-color: #444;
+  background: #16213e;
+  cursor: default;
+}
+
+/* Zone textuelle d'invite présente dans les slots inoccupés */
 .slot-placeholder {
   color: #aaa;
   font-size: 12px;
@@ -443,6 +505,7 @@ td.col-nom {
   line-height: 1.6;
 }
 
+/* Génération automatique de l'icône "+" esthétique au-dessus de l'invite de slot */
 .slot-placeholder::before {
   content: "+";
   display: block;
@@ -452,12 +515,21 @@ td.col-nom {
   margin-bottom: 4px;
 }
 
+/* Désactive le symbole "+" UNIQUEMENT sur la page d'accueil (Index) */
+#main-content .slot-placeholder::before {
+  content: "";       /* Remplace le "+" par du vide */
+  display: block;
+  margin-bottom: 0;   /* Optionnel : retire la marge pour bien recentrer le texte "Slot Vide" */
+}
+
+/* Ajustements graphiques spécifiques lorsqu'un Pokémon occupe le slot */
 .team-slot.filled {
   border: 2px solid #0f3460;
   background: #16213e;
   padding: 10px 6px 8px 6px;
 }
 
+/* Bouton circulaire flottant permettant de retirer un Pokémon de son emplacement */
 .slot-remove {
   position: absolute;
   top: 6px;
@@ -478,10 +550,12 @@ td.col-nom {
   transition: background 0.2s;
 }
 
+/* Assombrissement du bouton de suppression au survol de la souris */
 .slot-remove:hover {
   background: #c0392b;
 }
 
+/* Format d'affichage optimal pour le grand sprite du Pokémon dans son slot */
 .slot-sprite {
   width: 80px;
   height: 80px;
@@ -489,6 +563,7 @@ td.col-nom {
   margin-bottom: 4px;
 }
 
+/* Bloc de substitution affiché si aucun fichier image n'est retourné par l'API */
 .slot-no-sprite {
   width: 80px;
   height: 80px;
@@ -499,6 +574,7 @@ td.col-nom {
   color: #555;
 }
 
+/* Style appliqué au libellé contenant le nom du Pokémon dans son slot */
 .slot-name {
   font-size: 11px;
   color: #eee;
@@ -511,11 +587,13 @@ td.col-nom {
   margin-bottom: 4px;
 }
 
+/* Conteneur d'espacement réservé aux insignes de formes spéciales des slots */
 .slot-badge {
   margin-bottom: 4px;
   min-height: 16px;
 }
 
+/* Groupement et centrage des badges de types assignés au Pokémon du slot */
 .slot-types {
   display: flex;
   flex-wrap: wrap;
@@ -527,6 +605,7 @@ td.col-nom {
    MESSAGE TEMPORAIRE
    ============================================================ */
 
+/* Zone de notification générique pour les alertes utilisateur */
 .team-message {
   text-align: center;
   font-size: 13px;
@@ -537,21 +616,30 @@ td.col-nom {
   transition: opacity 0.3s;
 }
 
+/* Thème vert appliqué pour confirmer le succès d'une opération */
 .team-message.success { background: #1a3a1a; color: #7ddb7d; }
+
+/* Thème jaune appliqué pour notifier une attention requise */
 .team-message.warning { background: #3a2e00; color: #f5c518; }
+
+/* Thème rouge appliqué pour signaler un blocage ou une erreur critique */
 .team-message.error   { background: #3a0000; color: #e63946; }
+
+/* Thème bleu appliqué pour véhiculer une information neutre */
 .team-message.info    { background: #0f2040; color: #4fc3f7; }
 
 /* ============================================================
    SECTION COUVERTURE DÉFENSIVE — STYLE POKETOOLS
    ============================================================ */
 
+/* Conteneur de fond clair de la section d'analyse des faiblesses d'équipe */
 #defense-section {
   background: #f0f0f0;
   padding: 20px 20px 40px 20px;
   margin-top: 10px;
 }
 
+/* Titre de la section d'analyse défensive */
 .defense-title {
   text-align: center;
   color: #333;
@@ -559,6 +647,7 @@ td.col-nom {
   font-size: 18px;
 }
 
+/* Permet le défilement horizontal de la matrice sur les supports mobiles */
 #defense-container {
   overflow-x: auto;
 }
@@ -567,6 +656,7 @@ td.col-nom {
    TABLEAU DÉFENSIF
    ============================================================ */
 
+/* Configuration structurelle globale du tableau de couverture défensive */
 #defense-table {
   width: 100%;
   table-layout: fixed;
@@ -578,9 +668,13 @@ td.col-nom {
   box-shadow: 0 1px 4px rgba(0,0,0,0.10);
 }
 
+/* Fixation stricte de la largeur de la première colonne (Noms des types) */
 #defense-table .col-type { width: 130px; }
+
+/* Répartition équitable de la largeur des 6 colonnes de multiplicateurs */
 #defense-table .col-stat { width: calc((100% - 130px) / 6); }
 
+/* Cellules d'en-tête de la matrice de couverture défensive */
 #defense-table thead th {
   background: #4db8c8;
   color: #fff;
@@ -593,10 +687,12 @@ td.col-nom {
   white-space: nowrap;
 }
 
+/* Exclusion de la bordure droite sur le dernier en-tête du tableau */
 #defense-table thead th:last-child {
   border-right: none;
 }
 
+/* Sous-titrage descriptif positionné sous le coefficient d'efficacité (ex: Immunité) */
 #defense-table .col-sub {
   display: block;
   font-size: 10px;
@@ -605,6 +701,7 @@ td.col-nom {
   margin-top: 2px;
 }
 
+/* Propriétés par défaut des cellules de données du tableau défensif */
 #defense-table tbody td {
   padding: 7px 6px;
   text-align: center;
@@ -614,17 +711,23 @@ td.col-nom {
   font-size: 14px;
 }
 
+/* Retrait de la bordure latérale droite de fin de ligne */
 #defense-table tbody td:last-child {
   border-right: none;
 }
 
+/* Couleur de fond unie appliquée aux lignes paires de la matrice */
 #defense-table tbody tr.def-row-even { background: #ffffff; }
+
+/* Couleur de fond contrastée appliquée aux lignes impaires de la matrice */
 #defense-table tbody tr.def-row-odd  { background: #f7f7f7; }
 
+/* Effet de mise en valeur de la ligne de faiblesse actuellement survolée */
 #defense-table tbody tr:hover {
   background: #e8f4f8 !important;
 }
 
+/* Style d'affichage des en-têtes de lignes contenant les types d'attaques */
 #defense-table tbody td.td-type-full {
   text-align: center;
   font-weight: bold;
@@ -633,10 +736,12 @@ td.col-nom {
   border-right: 1px solid #ddd !important;
 }
 
+/* Formatage global du texte à l'intérieur des cellules de données numériques */
 .def-stat-cell {
   font-size: 14px;
 }
 
+/* Surlignage rouge prononcé pour alerter sur une vulnérabilité critique de l'équipe */
 .cell-danger {
   background: rgba(220, 50, 50, 0.18) !important;
   outline: 2px solid #e63946;
@@ -648,6 +753,7 @@ td.col-nom {
    LÉGENDE DU TABLEAU DÉFENSIF
    ============================================================ */
 
+/* Agencement flexible de la zone des légendes explicatives sous le tableau */
 #defense-legend {
   display: flex;
   flex-wrap: wrap;
@@ -658,25 +764,39 @@ td.col-nom {
   color: #555;
 }
 
+/* Item individuel associant un marqueur textuel à sa règle de couleur */
 #defense-legend .legend-item {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
+/* Coloration indicative pour la mention "Immunité" */
 #defense-legend .immunity  { color: #7038F8; }
-#defense-legend .good025   { color: #28a050; }
-#defense-legend .good05    { color: #50b478; }
-#defense-legend .neutral   { color: #888;    }
-#defense-legend .bad2      { color: #e07020; }
-#defense-legend .bad4      { color: #e03232; }
-#defense-legend .danger    { color: #e63946; }
 
+/* Coloration indicative pour la mention "Résistance efficace x0.25" */
+#defense-legend .good025   { color: #28a050; }
+
+/* Coloration indicative pour la mention "Résistance standard x0.5" */
+#defense-legend .good05    { color: #50b478; }
+
+/* Coloration indicative pour la mention "Efficacité neutre x1" */
+#defense-legend .neutral   { color: #888;    }
+
+/* Coloration indicative pour la mention "Faiblesse standard x2" */
+#defense-legend .bad2      { color: #e07020; }
+
+/* Coloration indicative pour la mention "Faiblesse double x4" */
+#defense-legend .bad4      { color: #e03232; }
+
+/* Coloration indicative pour la mention "Danger critique (sans réponse)" */
+#defense-legend .danger    { color: #e63946; }
 
 /* ============================================================
    ZONE RECHERCHE AVANCÉE
    ============================================================ */
 
+/* Panneau d'encapsulation général des critères de recherche multicritères */
 #advanced-search-zone {
   background: #e2e8f0;
   padding: 20px;
@@ -687,6 +807,7 @@ td.col-nom {
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
+/* Titre principal de la zone de recherche avancée */
 #advanced-search-zone h2 {
   text-align: center;
   color: #0f3460;
@@ -694,6 +815,7 @@ td.col-nom {
   margin-bottom: 0px;
 }
 
+/* Titres secondaires délimitant les catégories de filtres (Identité, Statistiques, etc.) */
 #advanced-search-zone h3 {
   color: #e63946;
   font-size: 14px;
@@ -703,18 +825,21 @@ td.col-nom {
   padding-bottom: 4px;
 }
 
+/* Structure en colonne de la boîte de filtres */
 .advanced-search-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+/* Disposition en ligne des différents blocs thématiques de filtres */
 .filter-top-row {
   display: flex;
   gap: 30px;
   flex-wrap: wrap;
 }
 
+/* Carte blanche isolant un ensemble cohérent de filtres */
 .filter-group {
   flex: 1;
   min-width: 280px;
@@ -723,6 +848,7 @@ td.col-nom {
   border-radius: 8px;
 }
 
+/* Ligne d'ajustement pour le filtrage précis d'une statistique (ex: PV >= 80) */
 .stat-filter-row {
   display: flex;
   align-items: center;
@@ -730,12 +856,14 @@ td.col-nom {
   margin-bottom: 8px;
 }
 
+/* Libellé fixe décrivant la statistique ciblée par la ligne de filtrage */
 .stat-filter-row label {
   width: 60px;
   font-weight: bold;
   font-size: 12px;
 }
 
+/* Harmonisation graphique des champs de sélection et saisie de la recherche avancée */
 #advanced-search-zone select,
 #advanced-search-zone input {
   padding: 6px 10px;
@@ -745,9 +873,13 @@ td.col-nom {
   color: #333;
 }
 
+/* Largeur calibrée pour le sélecteur d'opérateur mathématique (<, >, =) */
 .stat-filter-row select { width: 60px; }
+
+/* Largeur calibrée pour le champ de saisie de valeur numérique de statistique */
 .stat-filter-row input { width: 80px; }
 
+/* Alignement vertical interne dédié au groupe d'identification générale */
 .identity-group {
   display: flex;
   flex-direction: column;
@@ -755,21 +887,25 @@ td.col-nom {
   gap: 15px;
 }
 
+/* Ligne d'alignement générique associant un label à son champ associé */
 .field-row {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
+/* Largeur fixe imposée aux labels de texte informatifs pour équilibrer la grille */
 .field-row label {
   width: 70px;
   font-weight: bold;
 }
 
+/* Extension automatique du champ select pour remplir l'espace restant de sa ligne */
 .field-row select {
   flex: 1;
 }
 
+/* Conteneur inférieur regroupant le tableau récapitulatif des relations de types */
 .filter-bottom-row {
   background: #fff;
   padding: 15px;
@@ -779,16 +915,19 @@ td.col-nom {
 /* ────────────────────────────────────────────────────────────
    GRILLE RECONFIGURÉE — SANS ESPACE BLANC (COLLÉS ENTRE EUX)
    ──────────────────────────────────────────────────────────── */
+
+/* Grille principale ordonnant la matrice compacte d'ajustement des types */
 .type-relations-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0; /* Suppression complète de l'espace pour coller les lignes et les colonnes */
+  gap: 0;
   margin-top: 10px;
-  border: 1px solid #cbd5e1; /* Bordure générale extérieure */
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
   overflow: hidden;
 }
 
+/* Boîte unitaire associant un macaron de type à son sélecteur de vulnérabilité associé */
 .type-filter-item {
   display: flex;
   flex-direction: row;
@@ -797,11 +936,11 @@ td.col-nom {
   gap: 0;
   background: #f1f5f9;
   padding: 6px 10px;
-  border: 1px solid #cbd5e1; /* Bordures fines communes */
-  margin: -0.5px; /* Évite les doubles bordures */
+  border: 1px solid #cbd5e1;
+  margin: -0.5px;
 }
 
-/* Ajustement spécifique du badge pour s'accorder au collage */
+/* Formatage rectiligne droit du badge pour épouser le champ select attenant */
 .type-filter-item .type-badge {
   margin: 0;
   width: 85px;
@@ -812,17 +951,17 @@ td.col-nom {
   border-bottom-right-radius: 10px;
 }
 
-/* Ajustement spécifique du select pour s'accorder au collage */
+/* Calibrage dimensionnel rigoureux du select imbriqué dans la mini-grille */
 .type-filter-item select {
-  min-width: 85px;  /* Modifie cette valeur (ex: 100px ou 120px) pour forcer le champ à être plus LARGE */
-  font-size: 12px;  /* Taille du texte à l'intérieur du champ */
-  height: 26px;     /* Modifie cette valeur (ex: 30px ou 34px) pour rendre le champ plus HAUT */
+  min-width: 85px;
+  font-size: 12px;
+  height: 26px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-left: none; 
 }
 
-/* Action Button */
+/* Bouton d'action permettant de remettre à zéro l'intégralité des filtres avancés */
 #btn-reset-advanced {
   background: #222;
   color: #fff;
@@ -835,23 +974,30 @@ td.col-nom {
   text-align: center;
 }
 
+/* Mutation de la couleur de fond du bouton de réinitialisation lors du survol */
 #btn-reset-advanced:hover {
   background: #e63946;
 }
 
-/* Responsive Media Queries */
+/* ============================================================
+   RESPONSIVE DESIGN (MEDIA QUERIES)
+   ============================================================ */
+
+/* Redimensionnement de la grille de relation de types sur tablette (3 colonnes) */
 @media (max-width: 1024px) {
   .type-relations-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
+/* Redimensionnement de la grille de relation de types sur petit écran (2 colonnes) */
 @media (max-width: 768px) {
   .type-relations-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+/* Passage de la mini-grille en empilement vertical strict sur les smartphones */
 @media (max-width: 480px) {
   .type-filter-item {
     flex-direction: column;
@@ -866,4 +1012,35 @@ td.col-nom {
     border-left: 1px solid #ccc;
     margin-top: 4px;
   }
+}
+
+/* ============================================================
+   BOUTON PLUS VERT DANS LA LISTE DU POKÉDEX
+   ============================================================ */
+
+.btn-add-pokemon-list {
+  background-color: #2ec4b6; /* Vert turquoise */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  transition: background 0.2s, transform 0.1s;
+  flex-shrink: 0; /* Empêche le bouton de se déformer */
+}
+
+.btn-add-pokemon-list:hover {
+  background-color: #23a99d;
+  transform: scale(1.1);
+}
+
+.btn-add-pokemon-list:active {
+  transform: scale(0.95);
 }

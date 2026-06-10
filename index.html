@@ -29,6 +29,19 @@
 
   <div id="main-content" style="display:none;">
 
+    <div id="team-counter" style="margin-top: 10px; font-weight: bold; margin-bottom: 10px;">0 / 6 Pokémon dans l'équipe</div>
+    
+    <div id="team-message" class="team-message"></div>
+
+    <div id="team-slots" style="margin-bottom: 25px;">
+      <div id="slot-0" class="team-slot empty"><span class="slot-placeholder">Slot Vide</span></div>
+      <div id="slot-1" class="team-slot empty"><span class="slot-placeholder">Slot Vide</span></div>
+      <div id="slot-2" class="team-slot empty"><span class="slot-placeholder">Slot Vide</span></div>
+      <div id="slot-3" class="team-slot empty"><span class="slot-placeholder">Slot Vide</span></div>
+      <div id="slot-4" class="team-slot empty"><span class="slot-placeholder">Slot Vide</span></div>
+      <div id="slot-5" class="team-slot empty"><span class="slot-placeholder">Slot Vide</span></div>
+    </div>
+	
     <div class="filters">
       <input type="text" id="search" placeholder="&#128269; Rechercher un Pokémon..." oninput="filterTable()" />
       <select id="filter-type" onchange="filterTable()">
@@ -52,14 +65,15 @@
             <th>#</th>
             <th>Sprite</th>
             <th>Nom</th>
+			<th></th>
             <th>Types</th>
-            <th class="sortable" onclick="sortTable(4)"  data-col="4">PV &#8597;</th>
-            <th class="sortable" onclick="sortTable(5)"  data-col="5">Att &#8597;</th>
-            <th class="sortable" onclick="sortTable(6)"  data-col="6">Déf &#8597;</th>
-            <th class="sortable" onclick="sortTable(7)"  data-col="7">Att Spé &#8597;</th>
-            <th class="sortable" onclick="sortTable(8)"  data-col="8">Déf Spé &#8597;</th>
-            <th class="sortable" onclick="sortTable(9)"  data-col="9">Vit &#8597;</th>
-            <th class="sortable" onclick="sortTable(10)" data-col="10">Total &#8597;</th>
+            <th class="sortable" onclick="sortTable(5)"  data-col="5">PV &#8597;</th>
+            <th class="sortable" onclick="sortTable(6)"  data-col="6">Att &#8597;</th>
+            <th class="sortable" onclick="sortTable(7)"  data-col="7">Déf &#8597;</th>
+            <th class="sortable" onclick="sortTable(8)"  data-col="8">Att Spé &#8597;</th>
+            <th class="sortable" onclick="sortTable(9)"  data-col="9">Déf Spé &#8597;</th>
+            <th class="sortable" onclick="sortTable(10)" data-col="10">Vit &#8597;</th>
+            <th class="sortable" onclick="sortTable(11)" data-col="11">Total &#8597;</th>
           </tr>
         </thead>
         <tbody id="pokemon-tbody"></tbody>

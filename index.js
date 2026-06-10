@@ -53,6 +53,9 @@ async function loadPokemon() {
   document.getElementById("main-content").style.display = "block";
   populateTypeFilter();
   updateCounter();
+  
+  // Charge l'aperçu de l'équipe une fois l'affichage prêt
+  chargerApercuEquipe();
 }
 
 // ============================================================
@@ -99,11 +102,23 @@ async function fetchPokemonData(pokemon) {
 
     const typesFr = types.map(t => translateType(t));
 
-    tr.innerHTML =
+
+tr.innerHTML =
       '<td>' + pokemon.id + '</td>' +
       '<td>' + (sprite ? '<img class="sprite" src="' + sprite + '" alt="' + pokemon.nomFr + '" loading="lazy"/>' : "—") + '</td>' +
+      // Case 1 : Le nom du Pokémon uniquement (on retire le flex et le bouton)
       '<td class="col-nom" style="text-align:left; padding-left:12px;" title="' + pokemon.nomFr + '">' + pokemon.nomFr + ' ' + badgeHtml + '</td>' +
+      
+      // Case 2 (NOUVELLE COLOUNE) : La case contenant uniquement ton bouton vert
+      '<td style="text-align:center; width: 40px;">' +
+	  '<button class="btn-add-pokemon-list" title="Ajouter à l\'équipe" onclick="ajouterPokemonDepuisPokedex(' + pokemon.id + ', \'' + pokemon.slug + '\', \'' + pokemon.nomFr + '\', \'' + sprite + '\', \'' + pokemon.forme + '\', ' + JSON.stringify(types).replace(/"/g, '&quot;') + ')">+</button>' +
+	  '</td>' +
+
+      
       '<td>' + typesFr.map(function(t){ return '<span class="type-badge type-' + t + '">' + t + '</span>'; }).join("") + '</td>' +
+    
+	
+	
       '<td>' + makeStatBar(hp,  "hp",               255) + '</td>' +
       '<td>' + makeStatBar(atk, "attack",            190) + '</td>' +
       '<td>' + makeStatBar(def, "defense",           250) + '</td>' +
@@ -131,14 +146,15 @@ function sortTable(colIndex) {
     sortAsc = false;
   }
 
+  // Modifie le dictionnaire colMap pour correspondre aux nouveaux index des colonnes :
   const colMap = {
-    4:  "data-hp",
-    5:  "data-atk",
-    6:  "data-def",
-    7:  "data-spa",
-    8:  "data-spd",
-    9:  "data-spe",
-    10: "data-total"
+    5:  "data-hp",      // Était 4 avant
+    6:  "data-atk",     // Était 5 avant
+    7:  "data-def",     // Était 6 avant
+    8:  "data-spa",     // Était 7 avant
+    9:  "data-spd",     // Était 8 avant
+    10: "data-spe",     // Était 9 avant
+    11: "data-total"    // Était 10 avant
   };
 
   const attr = colMap[colIndex];
@@ -193,10 +209,12 @@ function makeStatBar(value, statName, maxVal) {
   const pct   = Math.min(100, Math.round((value / maxVal) * 100));
   const color = STAT_COLORS[statName] || "#aaa";
   return '<div class="stat-bar-container">' +
+         // 1. On place la valeur numérique en premier
+         '<span class="stat-value">' + value + '</span>' +
+         // 2. La barre colorée vient ensuite
          '<div class="stat-bar-bg">' +
          '<div class="stat-bar-fill" style="width:' + pct + '%; background:' + color + ';"></div>' +
          '</div>' +
-         '<span class="stat-value">' + value + '</span>' +
          '</div>';
 }
 
@@ -228,6 +246,141 @@ function updateCounter() {
 }
 
 // ============================================================
-// 8. DÉMARRAGE
+// 8. COUPLAGE AVEC LA MÉMOIRE DE L'ÉQUIPE (LOCALSTORAGE)
+// ============================================================
+const TYPE_CSS_INDEX = {
+  "Normal":"Normal","Feu":"Feu","Eau":"Eau","Plante":"Plante",
+  "Électrik":"Electrik","Glace":"Glace","Combat":"Combat","Poison":"Poison",
+  "Sol":"Sol","Vol":"Vol","Psy":"Psy","Insecte":"Insecte","Roche":"Roche",
+  "Spectre":"Spectre","Dragon":"Dragon","Ténèbres":"Tenebres","Acier":"Acier","Fée":"Fee"
+};
+
+function chargerApercuEquipe() {
+  const sauvegarde = localStorage.getItem("pokemon_champions_team");
+  let equipe = [null, null, null, null, null, null];
+
+  if (sauvegarde) {
+    try {
+      const equipeChargee = JSON.parse(sauvegarde);
+      if (Array.isArray(equipeChargee) && equipeChargee.length === 6) {
+        equipe = equipeChargee;
+      }
+    } catch (e) {
+      console.error("Erreur de lecture de l'équipe", e);
+    }
+  }
+
+  const count = equipe.filter(t => t !== null).length;
+  const counterEl = document.getElementById("team-counter");
+  if (counterEl) counterEl.textContent = count + " / 6 Pokémon dans l'équipe";
+
+  equipe.forEach((data, index) => {
+    const slot = document.getElementById("slot-" + index);
+    if (!slot) return;
+
+    if (!data) {
+      slot.className = "team-slot empty";
+      slot.innerHTML = '<span class="slot-placeholder">Slot Vide</span>';
+      return;
+    }
+
+    let badgeHtml = "";
+    if (data.forme === "mega")     badgeHtml = '<span class="badge-mega">MÉGA</span>';
+    if (data.forme === "regional") badgeHtml = '<span class="badge-regional">RÉGIONALE</span>';
+    if (data.forme === "special")  badgeHtml = '<span class="badge-special">SPÉCIALE</span>';
+
+    slot.className = "team-slot filled";
+    slot.innerHTML =
+      (data.sprite ? '<img class="slot-sprite" src="' + data.sprite + '" alt="' + data.nomFr + '">' : '<div class="slot-no-sprite">?</div>') +
+      '<div class="slot-name" title="' + data.nomFr + '">' + data.nomFr + '</div>' +
+      '<div class="slot-badge">' + badgeHtml + '</div>' +
+      '<div class="slot-types">' +
+        data.types.map(t => '<span class="type-badge type-' + (TYPE_CSS_INDEX[t] || t) + '">' + t + '</span>').join("") +
+      '</div>';
+  });
+}
+
+// ============================================================
+// 9. DÉMARRAGE
 // ============================================================
 window.addEventListener("DOMContentLoaded", loadPokemon);
+
+
+// ============================================================
+// FONCTION POUR AJOUTER UN POKÉMON DEPUIS LE BOUTON VERT (SANS ALERT)
+// ============================================================
+function ajouterPokemonDepuisPokedex(id, slug, nomFr, sprite, forme, typesArr) {
+  // 1. Charger l'équipe actuelle depuis le LocalStorage
+  const sauvegarde = localStorage.getItem("pokemon_champions_team");
+  let equipe = [null, null, null, null, null, null];
+  
+  if (sauvegarde) {
+    try {
+      equipe = JSON.parse(sauvegarde);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  // Vérification Doublon avec message temporaire
+  const estDejaDansLEquipe = equipe.some(slot => slot !== null && slot.slug === slug);
+  if (estDejaDansLEquipe) {
+    showMessage("⚠️ " + nomFr + " est déjà dans votre équipe !", "warning");
+    return;
+  }
+
+  // Trouver le premier slot vide
+  const slotLibreIndex = equipe.findIndex(slot => slot === null);
+
+  // Vérification Équipe Pleine avec message temporaire
+  if (slotLibreIndex === -1) {
+    showMessage("⛔ L'équipe est déjà complète (6/6) !", "error");
+    return;
+  }
+
+  // Traduire les types en Français avant la sauvegarde
+  const typesEnFrancais = typesArr.map(t => translateType(t));
+
+  // Créer l'objet du Pokémon
+  const nouveauPokemon = {
+    id: id,
+    slug: slug,
+    nomFr: nomFr,
+    sprite: sprite,
+    forme: forme,
+    types: typesEnFrancais
+  };
+
+  // Insérer le Pokémon dans le slot vide et sauvegarder
+  equipe[slotLibreIndex] = nouveauPokemon;
+  localStorage.setItem("pokemon_champions_team", JSON.stringify(equipe));
+
+  // Rafraîchir l'affichage des slots d'aperçu en haut de index.html
+  chargerApercuEquipe();
+  
+  // Message de confirmation fluide à la place de l'alert !
+  showMessage("✅ " + nomFr + " ajouté à l'équipe !", "success");
+}
+
+
+// ============================================================
+// SYSTEME DE NOTIFICATION TEMPORAIRE (STYLE BANDEAU)
+// ============================================================
+function showMessage(text, type) {
+  const msgEl = document.getElementById("team-message");
+  if (!msgEl) return;
+
+  msgEl.textContent = text;
+  msgEl.className = "team-message " + type; // applique les styles .success, .warning, .error, etc.
+  
+  // On annule le précédent chronomètre s'il y en avait un en cours
+  if (window.teamMessageTimeout) {
+    clearTimeout(window.teamMessageTimeout);
+  }
+
+  // Le bandeau s'efface automatiquement après 3 secondes (3000 ms)
+  window.teamMessageTimeout = setTimeout(function() {
+    msgEl.textContent = "";
+    msgEl.className = "team-message";
+  }, 3000);
+}

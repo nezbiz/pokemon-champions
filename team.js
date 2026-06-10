@@ -7,8 +7,29 @@
 // ============================================================
 // 1. ÉTAT DE L'ÉQUIPE Et Cache local pour les stats d'API
 // ============================================================
-const team = [null, null, null, null, null, null];
+// On initialise le tableau avec 6 emplacements vides par défaut
+let team = [null, null, null, null, null, null];
 const POKEMON_DATA_CACHE = {}; // Cache pour stocker les types, stats et talents de l'API
+
+// --- NOUVELLES FONCTIONS LOCALSTORAGE ---
+function sauvegarderEquipe() {
+  localStorage.setItem("pokemon_champions_team", JSON.stringify(team));
+}
+
+function appliquerChargementEquipe() {
+  const sauvegarde = localStorage.getItem("pokemon_champions_team");
+  if (sauvegarde) {
+    try {
+      const equipeChargee = JSON.parse(sauvegarde);
+      if (Array.isArray(equipeChargee) && equipeChargee.length === 6) {
+        team = equipeChargee;
+      }
+    } catch (e) {
+      console.error("Erreur lors du chargement de l'équipe depuis le localStorage", e);
+    }
+  }
+}
+// ----------------------------------------
 
 // ============================================================
 // 2. TABLE DES TYPES (défense)
@@ -93,7 +114,6 @@ function getMultiplier(attackingType, defenderTypes) {
   return mult;
 }
 
-// Supprime l'affichage d'un message temporaire
 function showMessage(text, type) {
   const el = document.getElementById("team-message");
   if (!el) return;
@@ -103,7 +123,6 @@ function showMessage(text, type) {
   el._timeout = setTimeout(function() { el.textContent = ""; el.className = "team-message"; }, 3000);
 }
 
-// Fonction utilitaire pour charger les types, stats et talents d'un Pokémon (avec mise en cache)
 async function fetchPokemonDetails(slug) {
   if (POKEMON_DATA_CACHE[slug]) return POKEMON_DATA_CACHE[slug];
   
@@ -124,9 +143,7 @@ async function fetchPokemonDetails(slug) {
   const typesEn = data.types.map(t => t.type.name);
   const typesFr = typesEn.map(translateType);
 
-  // Récupération des chaînes de caractères brutes des talents fournis par PokéAPI
   const talents = data.abilities.map(a => a.ability.name);
-
   const sprite = data.sprites?.other?.["official-artwork"]?.front_default || data.sprites?.front_default || "";
 
   POKEMON_DATA_CACHE[slug] = { stats: stats, types: typesFr, sprite: sprite, talents: talents };
@@ -202,10 +219,11 @@ async function addToTeam(pokemon) {
     team[slotIndex] = { slug: pokemon.slug, nomFr: pokemon.nomFr, forme: pokemon.forme, sprite: details.sprite, types: details.types };
     renderSlot(slotIndex);
     
+    // --- NOUVEAU : Sauvegarde automatique après ajout ---
+    sauvegarderEquipe();
+    
     // Mise à jour du compteur
-    const count = team.filter(function(t) { return t !== null; }).length;
-    const counterEl = document.getElementById("team-counter");
-    if (counterEl) counterEl.textContent = count + " / 6 Pokémon dans l'équipe";
+    actualiserCompteurEquipe();
     
     updateDefenseTable();
     showMessage("✅ " + pokemon.nomFr + " ajouté !", "success");
@@ -219,13 +237,20 @@ function removeFromTeam(slotIndex) {
   team[slotIndex] = null;
   renderSlot(slotIndex);
   
+  // --- NOUVEAU : Sauvegarde automatique après retrait ---
+  sauvegarderEquipe();
+  
   // Mise à jour du compteur
-  const count = team.filter(function(t) { return t !== null; }).length;
-  const counterEl = document.getElementById("team-counter");
-  if (counterEl) counterEl.textContent = count + " / 6 Pokémon dans l'équipe";
+  actualiserCompteurEquipe();
   
   updateDefenseTable();
   showMessage("🗑️ " + name + " retiré de l'équipe.", "info");
+}
+
+function actualiserCompteurEquipe() {
+  const count = team.filter(function(t) { return t !== null; }).length;
+  const counterEl = document.getElementById("team-counter");
+  if (counterEl) counterEl.textContent = count + " / 6 Pokémon dans l'équipe";
 }
 
 function renderSlot(index) {
@@ -249,6 +274,12 @@ function renderSlot(index) {
         return '<span class="type-badge type-' + (TYPE_CSS[t] || t) + '">' + t + '</span>';
       }).join("") +
     '</div>';
+}
+
+function rafraichirTousLesSlots() {
+  for (let i = 0; i < 6; i++) {
+    renderSlot(i);
+  }
 }
 
 // ============================================================
@@ -309,7 +340,6 @@ function updateDefenseTable() {
 // ============================================================
 // 9. FILTRES AVANCÉS DYNAMIQUES ET EXÉCUTION DE RECHERCHE
 // ============================================================
-
 function gererDesactivationTypes() {
   const selectType1 = document.getElementById('filter-type1');
   const selectType2 = document.getElementById('filter-type2');
@@ -339,7 +369,6 @@ function gererDesactivationTypes() {
   });
 }
 
-// Génération des filtres et extraction initiale de TOUS les talents uniques de Pokémon Champions
 async function genererFiltresAvances() {
   const grilleTypes = document.getElementById('advanced-type-filters');
   const selectType1 = document.getElementById('filter-type1');
@@ -347,7 +376,6 @@ async function genererFiltresAvances() {
   const selectTalent = document.getElementById('filter-talent');
   
   if (!grilleTypes) return;
-
   grilleTypes.innerHTML = "";
 
   ALL_TYPES.forEach(function(typeFr) {
@@ -381,10 +409,8 @@ async function genererFiltresAvances() {
     }
   });
 
-  // --- EXTRACTION, TRI ET REMPLISSAGE DE TOUS LES TALENTS DISPONIBLES DES LE DEBUT ---
   if (selectTalent) {
     selectTalent.innerHTML = '<option value="">⏳ Chargement des talents...</option>';
-    
     try {
       const BATCH_SIZE = 25;
       const talentsUniques = new Set();
@@ -402,23 +428,19 @@ async function genererFiltresAvances() {
         });
       }
 
-      // CRUCIAL : Extraction et tri alphabétique basé sur le résultat de la TRADUCTION française
       const listeTalentsTriees = Array.from(talentsUniques).sort((a, b) => {
         const nomFrA = translateAbility(a);
         const nomFrB = translateAbility(b);
-        // Utilisation de localeCompare pour la bonne gestion française des accents (É, Œ, etc.)
         return nomFrA.localeCompare(nomFrB, 'fr', { sensitivity: 'base' });
       });
 
-      // Remplissage final du select ordonné
       selectTalent.innerHTML = '<option value="">Tous</option>';
       listeTalentsTriees.forEach(talent => {
         const opt = document.createElement('option');
-        opt.value = talent; // Le slug anglais original est envoyé à PokéAPI
-        opt.textContent = translateAbility(talent); // Le nom français trié s'affiche à l'écran
+        opt.value = talent;
+        opt.textContent = translateAbility(talent);
         selectTalent.appendChild(opt);
       });
-
       selectTalent.removeAttribute('disabled');
 
     } catch (err) {
@@ -428,7 +450,6 @@ async function genererFiltresAvances() {
   }
 }
 
-// COEUR DE LA FONCTIONNALITÉ : Recherche complexe après clic ou détection de changements
 async function executerRechercheAvancee() {
   const resultsContainer = document.getElementById('advanced-results-container');
   const resultsGrid = document.getElementById('advanced-results-grid');
@@ -437,14 +458,10 @@ async function executerRechercheAvancee() {
   resultsGrid.innerHTML = `<p style="color: white; font-weight: bold;">⏳ Analyse et filtrage de la base de données PokéAPI en cours...</p>`;
   resultsContainer.classList.remove('hidden');
 
-  // 1. Récupération des filtres de type d'identité
   const t1 = document.getElementById('filter-type1').value;
   const t2 = document.getElementById('filter-type2').value;
-
-  // --- FILTRE TALENT AVANCÉ ---
   const filterTalent = document.getElementById('filter-talent') ? document.getElementById('filter-talent').value : "";
 
-  // 2. Récupération des filtres de statistiques de base
   const statsList = ['hp', 'atk', 'def', 'spatk', 'spdef', 'vit'];
   const statFilters = {};
   statsList.forEach(s => {
@@ -457,7 +474,6 @@ async function executerRechercheAvancee() {
     }
   });
 
-  // 3. Récupération des relations de table des types voulues
   const relationFilters = [];
   document.querySelectorAll('.filter-relation').forEach(select => {
     if (select.value !== "") {
@@ -470,20 +486,15 @@ async function executerRechercheAvancee() {
 
   const matchedPokemon = [];
 
-  // 4. Parcourt de tous les Pokémon de pokemon-list.js
   for (const pokemon of POKEMON_LIST) {
     try {
       const details = await fetchPokemonDetails(pokemon.slug);
 
-      // --- FILTRE COMPATIBILITÉ TALENT ---
       if (filterTalent && (!details.talents || !details.talents.includes(filterTalent))) continue;
-
-      // --- FILTRE TYPE 1 & TYPE 2 ---
       if (t1 && !details.types.includes(t1)) continue;
       if (t2 && !details.types.includes(t2)) continue;
       if (t1 && t2 && details.types.length < 2) continue;
 
-      // --- FILTRE STATISTIQUES DE BASE ---
       let statMatch = true;
       for (const [statKey, filter] of Object.entries(statFilters)) {
         const realVal = details.stats[statKey] || 0;
@@ -493,7 +504,6 @@ async function executerRechercheAvancee() {
       }
       if (!statMatch) continue;
 
-      // --- FILTRE RÉSISTANCES ET FAIBLESSES ---
       let relationMatch = true;
       for (const f of relationFilters) {
         const mult = getMultiplier(f.attackingType, details.types);
@@ -511,7 +521,6 @@ async function executerRechercheAvancee() {
     }
   }
 
-  // 5. Affichage final des résultats triés
   resultsGrid.innerHTML = "";
   if (matchedPokemon.length === 0) {
     resultsGrid.innerHTML = `<p style="color: white; font-weight: bold;">❌ Aucun Pokémon ne correspond à l'intégralité de ces critères.</p>`;
@@ -539,11 +548,9 @@ async function executerRechercheAvancee() {
 
     card.querySelector('.add-from-advanced').addEventListener('click', async () => {
       await addToTeam(p);
-      
       const zoneSlots = document.getElementById('team-slots');
       if (zoneSlots) {
         zoneSlots.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
         zoneSlots.style.transition = "transform 0.2s ease-in-out";
         zoneSlots.style.transform = "scale(1.01)";
         setTimeout(() => { zoneSlots.style.transform = "scale(1)"; }, 200);
@@ -580,7 +587,6 @@ function initResetAdvanced() {
     if (zoneSlots) {
       zoneSlots.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-
     zoneAvancee.classList.add('hidden');
     if (resultsContainer) resultsContainer.classList.add('hidden');
   });
@@ -594,13 +600,8 @@ function initClearAdvancedButton() {
   btnClear.addEventListener('click', function() {
     document.querySelectorAll('#advanced-search-zone input').forEach(function(input) { input.value = ''; });
     document.querySelectorAll('#advanced-search-zone select').forEach(function(select) { select.selectedIndex = 0; });
-    
     gererDesactivationTypes();
-
-    if (resultsContainer) {
-      resultsContainer.classList.add('hidden');
-    }
-    
+    if (resultsContainer) resultsContainer.classList.add('hidden');
     showMessage("🔄 Filtres réinitialisés !", "info");
   });
 }
@@ -614,7 +615,6 @@ function initAdvancedSearchButton() {
 
 function initAutoSearchOnStats() {
   const statElements = document.querySelectorAll('.stats-group input[type="number"], .stats-group select');
-  
   statElements.forEach(function(element) {
     element.addEventListener('change', function() {
       executerRechercheAvancee();
@@ -639,7 +639,6 @@ function initAutoSearchOnTypesAndRelations() {
       executerRechercheAvancee();
     });
   }
-
   if (selectTalent) {
     selectTalent.addEventListener('change', function() {
       executerRechercheAvancee();
@@ -658,8 +657,15 @@ function initAutoSearchOnTypesAndRelations() {
 // 10. DÉMARRAGE GLOBAL
 // ============================================================
 window.addEventListener("DOMContentLoaded", function() {
+  // --- NOUVEAU : On charge d'abord l'équipe depuis la mémoire ---
+  appliquerChargementEquipe();
+  
+  // --- NOUVEAU : On affiche visuellement les slots chargés ---
+  rafraichirTousLesSlots();
+  actualiserCompteurEquipe();
+
   initSearch();
-  updateDefenseTable();
+  updateDefenseTable(); // Met à jour le tableau défensif par rapport à l'équipe chargée
   genererFiltresAvances(); 
   gererDesactivationTypes(); 
   initialiserClicSlots();
